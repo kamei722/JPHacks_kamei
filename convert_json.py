@@ -12,35 +12,34 @@ def text_to_json(text: str) -> dict:
     
     # システムメッセージで詳細な指示を与える
     system_prompt = """
-あなたは入力されたテキストを正確にJSON形式に変換する専門家です。以下の制約に従って変換してください：
+    You are an expert in accurately converting input Japanese text to JSON format. Please convert according to the following constraints:
+    Output specifications:
+    1. output must be in the following JSON format.
+    {
+    “name": Must be a string consisting of common nouns only. Do not include particles, and classify detailed descriptions in additional_info.
+    “quantity": Numerical value only
+    “expiration date": The expiration date of the product, inferred from the general one. It should be a specific number of days and the unit should be days.
+    “category": Select one of the following categories:. 
+                '日用品', '食品', '飲料', 'Other',.
+    “additional_info": additional information in string. If none, empty string.
+    }
 
-出力仕様:
-1. 必ず以下のJSON形式で出力すること
-{
-  "name": "一般名詞のみで構成される文字列とする 青森のりんごとかはりんごで",
-  "quantity": 数値のみ,
-  "expiry_date": "YYYY-MM-DD形式で。不明な場合は null",
-  "category": "以下のカテゴリーのいずれかを選択: 
-              '日用品', '食品', '飲料', '衣類', 'その他'",
-  "additional_info": "追加情報を文字列で。ない場合は空文字列"
-}
+    Strict rules:
+    - Do not add any extra description.
+    - Always use a format that can be parsed as valid JSON.
+    - Japanese strings are output as-is without escaping using UTF-8.
+    - Japanese strings are output as-is in UTF-8 without escaping. quantity must be numeric (not a string).
+    - Use null or empty string for information that cannot be guessed.
 
-2. 厳格な規則：
-- 余計な説明は一切付けない
-- 必ず有効なJSONとして解析可能な形式にする
-- 日本語の文字列はUTF-8でエスケープせずそのまま出力
-- quantity は必ず数値型（文字列にしない）
-- 推測できない情報は null か 空文字列 を使用
-
-例：
-入力: トイレットペーパー12個セットを買った
-出力: {
-  "name": "トイレットペーパー",
-  "quantity": 12,
-  "expiry_date": null,
-  "category": "日用品",
-  "additional_info": "セット販売"
-}
+    Example:
+    Input: 北海道産の人参を5本買いました.
+    Output: {
+    “name": ‘人参’,
+    “quantity": 5
+    “expiry_date": 14 
+    “category": ‘食品’,
+    “additional_info": ”北海道産”
+    }
 """
 
     try:
@@ -69,7 +68,9 @@ def text_to_json(text: str) -> dict:
 def main():
     # テストケース
     test_texts = [
-        "新しいTシャツを3枚まとめ買いした"
+    "いちごのパックを買った"
+    "カップヌードルを3つ買った シーフードだった"
+    "10個入りの卵を買った"
     ]
     
     for text in test_texts:
