@@ -62,7 +62,7 @@ def text_to_json(text: str) -> dict:
 def main():
     # テストケース
     test_texts = [
-    "歯ブラシを買った"
+    "青森県産のりんごを3本買いました"
     ]
     
     for text in test_texts:
