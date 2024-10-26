@@ -20,7 +20,7 @@ def text_to_json(text: str) -> dict:
     “quantity": Numerical value only
     “expiration date": The expiration date of the product, inferred from the general one. It should be a specific number of days and the unit should be days.
     “category": Select one of the following categories:. 
-                '日用品', '食品', '飲料', 'Other',.
+                '日用品', '食品', 'その他',.
     “additional_info": additional information in string. If none, empty string.
     }
 
@@ -62,9 +62,7 @@ def text_to_json(text: str) -> dict:
 def main():
     # テストケース
     test_texts = [
-    "いちごのパックを買った"
-    "カップヌードルを3つ買った シーフードだった"
-    "10個入りの卵を買った"
+    "歯ブラシを買った"
     ]
     
     for text in test_texts:
