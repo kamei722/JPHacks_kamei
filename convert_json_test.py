@@ -53,12 +53,6 @@ def text_to_json(text: str) -> dict:
             temperature=0.2,
         )
         json_response = response.choices[0].message.content
-        
-        # デバッグ用に生の応答を表示
-        print("GPTからの応答:")
-        print(json_response)
-        print("\n--- 応答終了 ---\n")
-        
         return json.loads(json_response)
 
     except Exception as e:
